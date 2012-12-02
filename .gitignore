@@ -4,6 +4,8 @@
 # sbt specific
 dist/*
 target/
+.idea
+.idea_modules
 lib_managed/
 src_managed/
 project/boot/
