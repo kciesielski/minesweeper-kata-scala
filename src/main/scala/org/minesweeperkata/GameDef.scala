@@ -19,14 +19,12 @@ object Pos {
 case class Pos(x: Int, y: Int) {
 
   def dx(d: Int) = copy(x = x + d, y)
-
   def dy(d: Int) = copy(x, y = y + d)
 }
 
 object GameDef {
 
   def solution(level: GameDef): IndexedSeq[IndexedSeq[Int]] = {
-
     for (row <- 0 to level.height - 1) yield
       for (col <- 0 to level.width - 1) yield
         level.hint((Pos(col, row)))
@@ -41,11 +39,8 @@ trait GameDef {
   val height: Int
   val mine: MineLayout
 
-  def hint(pos: Pos): Int = {
-    moves.foldLeft(0)((count, move) => {
-      val isMine = if (mine(move(pos))) 1 else 0
-      count + isMine
-    })
-  }
+  def hint(pos: Pos): Int =
+    moves.foldLeft(0)((neighborMineCount, move) =>  if (mine(move(pos))) neighborMineCount + 1 else neighborMineCount)
+
 }
 
