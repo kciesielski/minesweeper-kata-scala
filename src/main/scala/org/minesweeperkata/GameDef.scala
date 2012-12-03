@@ -19,6 +19,7 @@ object Pos {
 case class Pos(x: Int, y: Int) {
 
   def dx(d: Int) = copy(x = x + d, y)
+
   def dy(d: Int) = copy(x, y = y + d)
 }
 
@@ -27,23 +28,18 @@ object GameDef {
   def solution(level: GameDef): IndexedSeq[IndexedSeq[Int]] = {
 
     for (row <- 0 to level.height - 1) yield
-      for ( col <- 0 to level.width - 1) yield
+      for (col <- 0 to level.width - 1) yield
         level.hint((Pos(col, row)))
   }
 }
 
 trait GameDef {
 
-  type Terrain = Pos => Boolean
   type MineLayout = Pos => Boolean
   val moves: List[Move] = List(moveRight, moveUp, moveLeft, moveDown, moveRightDown, moveRightUp, moveLeftUp, moveLeftDown)
   val width: Int
   val height: Int
   val mine: MineLayout
-
-  def terrain(position: Pos) : Boolean = {
-    position.x >= 0 && position.x < width && position.y >= 0 && position.y < height
-  }
 
   def hint(pos: Pos): Int = {
     moves.foldLeft(0)((count, move) => {

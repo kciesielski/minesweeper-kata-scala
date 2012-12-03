@@ -19,7 +19,6 @@ class GameTest extends Specification with ShouldMatchers {
     override val height = 1
   }
 
-
   object Level1 extends GameDef with StringParserTerrain {
     override val level =
       """...
@@ -48,29 +47,13 @@ class GameTest extends Specification with ShouldMatchers {
         |..*.""".stripMargin
 
     val solution =
-    Vector(
-    Vector(1,1,4,2),
-    Vector(1,3,4,3),
-    Vector(0,2,2,3))
+      Vector(
+        Vector(1, 1, 4, 2),
+        Vector(1, 3, 4, 3),
+        Vector(0, 2, 2, 3))
 
     override val width = 4
     override val height = 3
-  }
-
-
-  "terrain function for level 1" should {
-    "correctly determine if position belongs to terrain" in {
-
-      val level = Level1
-      assert(level.terrain(Pos(1, 1)))
-      assert(level.terrain(Pos(2, 2)))
-      assert(level.terrain(Pos(2, 0)))
-      assert(level.terrain(Pos(0, 0)))
-      assert(level.terrain(Pos(1, 2)))
-
-      assert(!level.terrain(Pos(1, 3)))
-      assert(!level.terrain(Pos(-1, 1)))
-    }
   }
 
   "mine function for level 1" should {
@@ -140,5 +123,4 @@ class GameTest extends Specification with ShouldMatchers {
   }
 
 }
-
 

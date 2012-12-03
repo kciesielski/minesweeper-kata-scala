@@ -28,12 +28,6 @@ trait StringParserTerrain extends GameDef {
     }
   }
 
-  def findChar(c: Char, levelVector: Vector[Vector[Char]]): Pos = {
-    val row = levelVector.indexWhere(inner => inner.contains(c))
-    val col = levelVector(row).indexOf(c)
-    Pos(row, col)
-  }
-
   private lazy val vector: Vector[Vector[Char]] =
     Vector(level.split("\n").map(str => Vector(str: _*)): _*)
 
