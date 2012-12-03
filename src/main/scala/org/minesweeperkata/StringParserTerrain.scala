@@ -6,7 +6,7 @@ trait StringParserTerrain extends GameDef {
   val level: String
 
   /**
-   * Build a function which determines where particular point is a mine or not.
+   * Builds a function which determines whether particular point is a mine or not.
    * @param levelVector vector of level rows (vector of vectors)
    */
   def mineFunction(levelVector: Vector[Vector[Char]]): Pos => Boolean = {
