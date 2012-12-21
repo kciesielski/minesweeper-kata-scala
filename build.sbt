@@ -9,5 +9,6 @@ resolvers += "Typesafe Repository" at "http://repo.typesafe.com/typesafe/release
 scalaVersion := "2.9.2"
 
 libraryDependencies ++= Seq(
-"org.specs2" %% "specs2" % "1.12.3" % "test"
+"org.specs2" %% "specs2" % "1.12.3" % "test",
+"org.mockito" % "mockito-all" % "1.9.0" % "test"
 )
