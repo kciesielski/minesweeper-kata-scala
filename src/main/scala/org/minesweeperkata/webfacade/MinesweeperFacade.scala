@@ -1,8 +1,8 @@
 package org.minesweeperkata.webfacade
 
-import org.minesweeperkata.Pos
+import org.minesweeperkata._
 
-class MinesweeperFacade {
+class MinesweeperFacade(val levelRandomizer:LevelRandomizer = new LevelRandomizer(), val gameStateDao: GameStateDao = InMemoryGameStateDao) {
 
   // http post to put a step step on a tile
   def stepOn(pos: Pos) {
@@ -19,9 +19,10 @@ class MinesweeperFacade {
     "TODO"
   }
 
-  // get for random level
-  def randomLevel() {
-
+  // post for starting a new game
+  def randomizeLevel(newWidth: Int, newHeight: Int, mineCount: Int) {
+    val gameDef = levelRandomizer.getNextLevel(newWidth, newHeight, mineCount)
+    gameStateDao.saveState(new RunningGameState(Set.empty[Pos], gameDef))
   }
 
 }
