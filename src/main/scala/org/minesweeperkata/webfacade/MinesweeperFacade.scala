@@ -4,22 +4,35 @@ import org.minesweeperkata._
 
 class MinesweeperFacade(val levelRandomizer:LevelRandomizer = new LevelRandomizer(), val gameStateDao: GameStateDao = InMemoryGameStateDao) {
 
-  // http post to put a step step on a tile
+  /**
+   * Causes the current game state to 'step' on the tile for given position. Stepping on a mine means DEATH ;)
+   * @throws IllegalArgumentException if given position is outside level terrain.
+   * @throws IllegalStateException if current game state is not 'running' (for example, you are already dead).
+   */
   def stepOn(pos: Pos) {
 
   }
 
-  // get for tile value if previously stepped on it
+  /**
+   * Returns information about actual value of tile on given position. Returned value is either a number 0-9 or
+   * a symbol '*' representing a mine.
+   * @throws IllegalArgumentException if given position is outside level terrain.
+   * @throws IllegalStateException if current game state is not 'running' or 'dead'.
+   */
   def tile(pos: Pos): String = {
     "*"
   }
 
-  // get for game status
+  /**
+   * Returns string representation of game status.
+   */
   def status(): String = {
-    "TODO"
+    "s"
   }
 
-  // post for starting a new game
+  /** Post for starting a new game. Modifies the 'current server state' to represent a ne level with given width,
+    * height and mine count.
+    */
   def randomizeLevel(newWidth: Int, newHeight: Int, mineCount: Int) {
     val gameDef = levelRandomizer.getNextLevel(newWidth, newHeight, mineCount)
     gameStateDao.saveState(new RunningGameState(Set.empty[Pos], gameDef))
