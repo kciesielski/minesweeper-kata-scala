@@ -26,9 +26,7 @@ class MinesweeperFacade(val levelRandomizer:LevelRandomizer = new LevelRandomize
   /**
    * Returns string representation of game status.
    */
-  def status(): String = {
-    "s"
-  }
+  def status(): String = gameStateDao.getState.describe
 
   /** Post for starting a new game. Modifies the 'current server state' to represent a ne level with given width,
     * height and mine count.
