@@ -1,4 +1,4 @@
-package org.minesweepkata
+package org.minesweeperkata
 
 import org.specs2.mutable._
 import org.specs2.matcher.ShouldMatchers
