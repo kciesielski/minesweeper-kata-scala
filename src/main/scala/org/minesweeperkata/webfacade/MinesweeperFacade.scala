@@ -2,7 +2,15 @@ package org.minesweeperkata.webfacade
 
 import org.minesweeperkata._
 
-class MinesweeperFacade(val levelRandomizer:LevelRandomizer = new LevelRandomizer(), val gameStateDao: GameStateDao = InMemoryGameStateDao) {
+object randomize extends ((Int, Int, Int, LevelRandomizer, GameStateDao) =>  Unit) {
+
+  def apply(newWidth: Int, newHeight: Int, mineCount: Int, levelRandomizer: LevelRandomizer, gameStateDao: GameStateDao) {
+    val gameDef = levelRandomizer.getNextLevel(newWidth, newHeight, mineCount)
+    gameStateDao.saveState(new RunningGameState(Set.empty[Pos], gameDef))
+  }
+}
+
+class MinesweeperFacade(val levelRandomizer: LevelRandomizer = new LevelRandomizer(), val gameStateDao: GameStateDao = InMemoryGameStateDao) {
 
   /**
    * Causes the current game state to 'step' on the tile for given position. Stepping on a mine means DEATH ;)
@@ -32,8 +40,7 @@ class MinesweeperFacade(val levelRandomizer:LevelRandomizer = new LevelRandomize
     * height and mine count.
     */
   def randomizeLevel(newWidth: Int, newHeight: Int, mineCount: Int) {
-    val gameDef = levelRandomizer.getNextLevel(newWidth, newHeight, mineCount)
-    gameStateDao.saveState(new RunningGameState(Set.empty[Pos], gameDef))
+    randomize(newWidth, newHeight, mineCount, levelRandomizer, gameStateDao)
   }
 
 }
