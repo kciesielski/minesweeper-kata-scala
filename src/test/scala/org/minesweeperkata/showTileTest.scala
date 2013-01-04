@@ -1,10 +1,7 @@
-package org.minesweeperkata.webfacade
+package org.minesweeperkata
 
 import org.specs2.mutable.Specification
 import org.specs2.mock.Mockito
-import org.minesweeperkata._
-import org.minesweeperkata.RunningGameState
-
 
 class showTileTest extends Specification with Mockito {
 
