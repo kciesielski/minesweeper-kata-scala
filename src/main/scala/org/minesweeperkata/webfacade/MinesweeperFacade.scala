@@ -10,6 +10,17 @@ object randomize extends ((Int, Int, Int, LevelRandomizer, GameStateDao) =>  Uni
   }
 }
 
+object showTile extends ((Pos, GameStateDao) => String)  {
+
+  def apply(pos: Pos, stateDao: GameStateDao): String = {
+    val state = stateDao.getState
+    state match {
+      case RunningGameState(revealedTiles, level) => level.hint(pos)
+      case _ => throw new IllegalStateException()
+    }
+  }
+}
+
 class MinesweeperFacade(val levelRandomizer: LevelRandomizer = new LevelRandomizer(), val gameStateDao: GameStateDao = InMemoryGameStateDao) {
 
   /**
@@ -28,7 +39,7 @@ class MinesweeperFacade(val levelRandomizer: LevelRandomizer = new LevelRandomiz
    * @throws IllegalStateException if current game state is not 'running' or 'dead'.
    */
   def tile(pos: Pos): String = {
-    "*"
+    showTile(pos, gameStateDao)
   }
 
   /**

@@ -48,9 +48,9 @@ class GameTest extends Specification with ShouldMatchers {
 
     val solution =
       Vector(
-        Vector(1, 1, 4, 2),
-        Vector(1, 3, 4, 3),
-        Vector(0, 2, 2, 3))
+        Vector("1", "*", "4", "*"),
+        Vector("1", "3", "*", "*"),
+        Vector("0", "2", "*", "3"))
 
     override val width = 4
     override val height = 3
@@ -79,7 +79,7 @@ class GameTest extends Specification with ShouldMatchers {
   "hint for single field" should {
     "be always 0" in {
       val level = TrivialEmptyLevel
-      level.hint(Pos(0, 0)) === 0
+      level.hint(Pos(0, 0)) === "0"
     }
   }
 
@@ -89,16 +89,16 @@ class GameTest extends Specification with ShouldMatchers {
       val level2 = Level2
       val level3 = Level3
 
-      level1.hint(Pos(1, 0)) === 1
-      level1.hint(Pos(0, 0)) === 1
+      level1.hint(Pos(1, 0)) === "1"
+      level1.hint(Pos(0, 0)) === "1"
 
-      level2.hint(Pos(0, 2)) === 0
+      level2.hint(Pos(0, 2)) === "0"
 
-      level3.hint(Pos(0, 2)) === 0
-      level3.hint(Pos(2, 0)) === 4
-      level3.hint(Pos(1, 0)) === 1
-      level3.hint(Pos(1, 1)) === 3
-      level3.hint(Pos(0, -1)) === 1
+      level3.hint(Pos(0, 2)) === "0"
+      level3.hint(Pos(2, 0)) === "4"
+      level3.hint(Pos(1, 0)) === "*"
+      level3.hint(Pos(1, 1)) === "3"
+      level3.hint(Pos(0, -1)) === "1"
     }
   }
 
@@ -112,7 +112,7 @@ class GameTest extends Specification with ShouldMatchers {
 
   "solution for trivial level 0" should {
     "0" in {
-      GameDef.solution(TrivialEmptyLevel) === Vector(Vector(0))
+      GameDef.solution(TrivialEmptyLevel) === Vector(Vector("0"))
     }
   }
 
