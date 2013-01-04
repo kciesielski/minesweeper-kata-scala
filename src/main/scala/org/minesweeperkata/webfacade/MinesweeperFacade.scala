@@ -10,7 +10,7 @@ class MinesweeperFacade(val levelRandomizer: LevelRandomizer = new LevelRandomiz
    * @throws IllegalStateException if current game state is not 'running' (for example, you are already dead).
    */
   def stepOn(pos: Pos) {
-
+    stepOnTile(pos, gameStateDao)
   }
 
   /**
