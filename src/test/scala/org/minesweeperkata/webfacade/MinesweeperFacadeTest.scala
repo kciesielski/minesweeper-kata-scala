@@ -37,6 +37,6 @@ class MinesweeperFacadeTest extends Specification with Mockito {
       status === "dead"
     }
 
-  }
+
 
 }

@@ -3,7 +3,6 @@ package org.minesweeperkata
 import org.specs2.mutable._
 import org.specs2.matcher.ShouldMatchers
 
-import org.minesweeperkata.{Pos, GameDef, StringParserTerrain}
 import org.minesweeperkata.Pos._
 
 class GameTest extends Specification with ShouldMatchers {
@@ -17,16 +16,6 @@ class GameTest extends Specification with ShouldMatchers {
 
     override val width = 1
     override val height = 1
-  }
-
-  object Level1 extends GameDef with StringParserTerrain {
-    override val level =
-      """...
-        |.*.
-        |...""".stripMargin
-
-    override val width = 3
-    override val height = 3
   }
 
   object Level2 extends GameDef with StringParserTerrain {
@@ -59,7 +48,7 @@ class GameTest extends Specification with ShouldMatchers {
   "mine function for level 1" should {
     "correctly determine if position has a mine" in {
 
-      val level = Level1
+      val level = TestLevel1
       assert(level.mine(Pos(1, 1)))
       assert(!level.mine(Pos(0, 1)))
       assert(!level.mine(Pos(-1, 1)))
@@ -85,7 +74,7 @@ class GameTest extends Specification with ShouldMatchers {
 
   "hint for field" should {
     "be number of surrounding mines" in {
-      val level1 = Level1
+      val level1 = TestLevel1
       val level2 = Level2
       val level3 = Level3
 
