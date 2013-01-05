@@ -10,9 +10,13 @@ object showTile extends ((Pos, GameStateDao) => String)  {
 
   def apply(pos: Pos, stateDao: GameStateDao): String = {
     val state = stateDao.getState
+
     state match {
-      case RunningGameState(revealedTiles, level) => level.hint(pos)
-      case _ => throw new IllegalStateException()
+      case RunningGameState(revealedTiles, level) => {
+        if (!level.contains(pos)) throw new IllegalArgumentException("Position " + pos + " exceeds game terrain")
+        level.hint(pos)
+      }
+      case _ => throw new IllegalStateException("Cannot reveal any tile in current state: " + state)
     }
   }
 }

@@ -65,6 +65,18 @@ class GameTest extends Specification with ShouldMatchers {
     }
   }
 
+  "level 2" should {
+    "not contain position outside terrain" in {
+      assert(!Level2.contains(Pos(8, 8)))
+    }
+  }
+
+  "level 2" should {
+    "contain position inside terrain" in {
+      assert(Level2.contains(Pos(1, 1)))
+    }
+  }
+
   "hint for single field" should {
     "be always 0" in {
       val level = TrivialEmptyLevel

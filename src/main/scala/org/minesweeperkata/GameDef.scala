@@ -39,6 +39,9 @@ trait GameDef {
   val height: Int
   val mine: MineLayout
 
+  def contains(pos: Pos): Boolean = pos.x < width && pos.x >= 0 && pos.y < height && pos.y >= 0
+
+
   def hint(pos: Pos): String =
     if (mine(pos)) "*"
     else

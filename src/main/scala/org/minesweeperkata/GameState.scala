@@ -21,7 +21,9 @@ case class RunningGameState(revealedTiles: Set[Pos], currentLevel: GameDef) exte
     !notVisitedPositions.exists((pos: Pos) => (currentLevel.hint(pos) != "0" && currentLevel.hint(pos) != "*"))
   }
 
-  def stepOn(pos: Pos): GameState = {
+  override def stepOn(pos: Pos): GameState = {
+    if (!currentLevel.contains(pos)) throw new IllegalArgumentException
+
     val alive = (currentLevel.hint(pos) != "*")
 
     if (!alive)
@@ -33,7 +35,7 @@ case class RunningGameState(revealedTiles: Set[Pos], currentLevel: GameDef) exte
       RunningGameState(revealedTiles + pos, currentLevel)
   }
 
-  def describe: String = "running"
+  override def describe: String = "running"
 }
 
 case object DeadGameState extends GameState {
