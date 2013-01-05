@@ -5,7 +5,7 @@ import org.specs2.matcher.ShouldMatchers
 
 import org.minesweeperkata.Pos._
 
-class GameTest extends Specification with ShouldMatchers {
+class GameSpec extends Specification with ShouldMatchers {
 
   object TrivialEmptyLevel extends GameDef with StringParserTerrain {
     override val level =

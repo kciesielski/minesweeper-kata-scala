@@ -3,7 +3,7 @@ package org.minesweeperkata
 import org.specs2.mutable.Specification
 import org.specs2.mock.Mockito
 
-class randomizeTest extends Specification with Mockito {
+class randomizeSpec extends Specification with Mockito {
 
    "The randomize function" should {
      "get random values and save level to dao" in {

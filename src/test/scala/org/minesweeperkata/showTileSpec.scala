@@ -3,7 +3,7 @@ package org.minesweeperkata
 import org.specs2.mutable.Specification
 import org.specs2.mock.Mockito
 
-class showTileTest extends Specification with Mockito {
+class showTileSpec extends Specification with Mockito {
 
   "The showTile function" should {
     "reveal touched field value" in {

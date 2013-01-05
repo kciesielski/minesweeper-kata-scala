@@ -5,7 +5,7 @@ import org.minesweeperkata._
 import org.specs2.mock.Mockito
 import org.specs2.mutable.Specification
 
-class MinesweeperFacadeTest extends Specification with Mockito {
+class MinesweeperFacadeSpec extends Specification with Mockito {
 
     "return proper name of current state (class)" in {
       // given

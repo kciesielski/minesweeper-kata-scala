@@ -2,7 +2,7 @@ package org.minesweeperkata
 
 import org.specs2.mutable._
 
-class LevelRandomizerTest extends Specification {
+class LevelRandomizerSpec extends Specification {
 
 
   "Level Randomizer" should {

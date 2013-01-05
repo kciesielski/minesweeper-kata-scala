@@ -3,7 +3,7 @@ package org.minesweeperkata
 import org.specs2.mutable.Specification
 import org.specs2.mock.Mockito
 
-class stepOTileTest extends Specification with Mockito {
+class stepOnTileSpec extends Specification with Mockito {
 
   "The stepOnTile function" should {
     "mutate and save state for ordinary tile" in {
