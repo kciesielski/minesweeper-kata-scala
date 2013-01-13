@@ -1,9 +1,21 @@
 <!DOCTYPE html>
-<html>
+<html ng-app="msApp">
 <head>
     <title>Minesweeper Kata</title>
+    <script src="lib/angular/angular.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/GameController.js"></script>
+    <script src="js/GameServices.js"></script>
+    <script src="js/UtilServices.js"></script>
 </head>
-<body>
+<body ng-controller="GameController">
+
+<!-- game board -->
+<table border="1">
+    <tr ng-repeat="row in board.rows">
+        <td ng-repeat="col in row.cols">{{col.value}}</td>
+    </tr>
+</table>
 
 </body>
 </html>
