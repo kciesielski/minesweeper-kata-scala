@@ -6,10 +6,25 @@
     <script src="js/app.js"></script>
     <script src="js/GameController.js"></script>
     <script src="js/GameServices.js"></script>
-    <script src="js/UtilServices.js"></script>
 </head>
 <body ng-controller="GameController">
 
+
+<form>
+    <fieldset>
+        <div>
+            <label for="width">Width</label>
+            <input id="width" type="number" ng-model="newGame.width"/>
+            <label for="height">Height</label>
+            <input id="height" type="number" ng-model="newGame.height"/>
+            <label for="mineCount">Mine count</label>
+            <input id="mineCount" type="number" ng-model="newGame.mineCount"/>
+        </div>
+        <div>
+            <button type="submit" ng-click="startNew()">New game</button>
+        </div>
+    </fieldset>
+</form>
 <!-- game board -->
 <table border="1">
     <tr ng-repeat="row in board.rows">
