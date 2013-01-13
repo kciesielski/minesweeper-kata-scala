@@ -5,6 +5,7 @@ import common.SafeInt
 import org.scalatra.databinding.JacksonJsonParsing
 import org.scalatra.json.{JValueResult, JacksonJsonSupport}
 import org.scalatra.ScalatraServlet
+import rest.NewGame
 
 class MinesweeperServlet(val levelRandomizer: LevelRandomizer = new LevelRandomizer(), val gameStateDao: GameStateDao = InMemoryGameStateDao)
   extends ScalatraServlet with JacksonJsonParsing with JacksonJsonSupport with JValueResult {
@@ -33,7 +34,8 @@ class MinesweeperServlet(val levelRandomizer: LevelRandomizer = new LevelRandomi
   }
 
   post("/randomLevel") {
-
+    val params = parsedBody.extract[NewGame]
+    randomize(params.width, params.height, params.mineCount, levelRandomizer, gameStateDao)
   }
 
   get("/status") {
