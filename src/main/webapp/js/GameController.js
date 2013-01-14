@@ -6,7 +6,9 @@ function GameController($scope) {
         $scope.currentState = GameState.RUNNING
     }
 
-    $scope.statusText = "TODO status text"
+    $scope.statusText = function() {
+        return "TODO status text"
+    }
 
     $scope.resetBoard = function () {
         $scope.board = {

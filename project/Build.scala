@@ -64,7 +64,16 @@ object KataBuild extends Build {
   lazy val game: Project = Project(
     "minesweeper",
     file("."),
-    settings = buildSettings ++ webSettings ++ Seq(libraryDependencies ++= scalatraStack ++ Seq(jetty, servletApiProvided))
+    settings = buildSettings ++ jasmineSettings ++ webSettings ++ Seq(libraryDependencies ++= scalatraStack ++ Seq(jetty, servletApiProvided),
+    libraryDependencies ++= Seq(jetty, servletApiProvided),
+    appJsDir <+= sourceDirectory { src => src / "main" / "webapp" / "js" },
+    appJsLibDir <+= sourceDirectory { src => src / "main" / "webapp" / "assets" / "js" },
+    jasmineTestDir <+= sourceDirectory { src => src / "test" / "unit" },
+    jasmineConfFile <+= sourceDirectory { src => src / "test" / "unit" / "test.dependencies.js" },
+    jasmineRequireJsFile <+= sourceDirectory { src => src / "test" / "lib" / "require" / "require.js" },
+    jasmineRequireConfFile <+= sourceDirectory { src => src / "test" / "unit" / "require.conf.js" },
+    (test in Test) <<= (test in Test) dependsOn (jasmine))
   )
+
 
 }
