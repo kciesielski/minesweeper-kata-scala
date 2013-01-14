@@ -14,21 +14,22 @@
     <fieldset>
         <div>
             <label for="width">Width</label>
-            <input id="width" type="number" ng-model="newGame.width"/>
+            <input id="width" type="number" ng-model="newGameCommand.width"/>
             <label for="height">Height</label>
-            <input id="height" type="number" ng-model="newGame.height"/>
+            <input id="height" type="number" ng-model="newGameCommand.height"/>
             <label for="mineCount">Mine count</label>
-            <input id="mineCount" type="number" ng-model="newGame.mineCount"/>
+            <input id="mineCount" type="number" ng-model="newGameCommand.mineCount"/>
         </div>
         <div>
             <button type="submit" ng-click="startNew()">New game</button>
         </div>
     </fieldset>
 </form>
+<p>{{statusText}}</p>
 <!-- game board -->
 <table border="1">
     <tr ng-repeat="row in board.rows">
-        <td ng-repeat="col in row.cols">{{col.value}}</td>
+        <td ng-repeat="field in row.fields"><pre>{{field.value}}</pre></td>
     </tr>
 </table>
 

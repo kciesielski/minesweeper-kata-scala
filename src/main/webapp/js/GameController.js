@@ -1,37 +1,54 @@
-function GameController($scope, $location) {
+function GameController($scope) {
 
     $scope.startNew = function () {
         console.log("TODO server call")
         $scope.resetBoard()
+        $scope.currentState = GameState.RUNNING
     }
+
+    $scope.statusText = "TODO status text"
 
     $scope.resetBoard = function () {
         $scope.board = {
-            "rows": {}
+            rows: {}
         }
 
-        var width = $scope.newGame.width
-        var height = $scope.newGame.height
+        var width = $scope.newGameCommand.width
+        var height = $scope.newGameCommand.height
 
-        for (var i=0; i<height; i++)
-        {
-            $scope.board.rows[i] = []
-            var row = $scope.board.rows[i]
-            row.cols = []
-            for (var c=0; c<width; c++)
-            {
-                row.cols[c] = {
-                    value: "?"
+        for (var rowIndex = 0; rowIndex < height; rowIndex++) {
+            $scope.board.rows[rowIndex] = []
+            var row = $scope.board.rows[rowIndex]
+            row.fields = []
+            for (var colIndex = 0; colIndex < width; colIndex++) {
+                row.fields[colIndex] = {
+                    x: colIndex,
+                    y: rowIndex,
+                    value: "     ",
+                    type: FieldType.UNKNOWN
                 }
             }
         }
     }
 
-    $scope.newGame = {
-        "width": 8,
-        "height": 8,
-        "mineCount": 8
+    $scope.newGameCommand = {
+        width: 8,
+        height: 8,
+        mineCount: 8
     }
 
     $scope.resetBoard()
+}
+
+GameState = {
+    RUNNING: 0,
+    WINNER: 1,
+    DEAD: 2
+}
+
+FieldType = {
+    UNKNOWN: 0,
+    FLAGGED: 1,
+    REVEALED: 2,
+    MINED: 3
 }
