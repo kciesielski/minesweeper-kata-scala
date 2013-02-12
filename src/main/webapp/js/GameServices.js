@@ -1,5 +1,7 @@
-angular.module('msServices', []).
-    factory('gameCore', function () {
+angular.module('msServices', ['ngResource']).
+    factory('gameCore', function ($resource) {
 
-        return {}
+        return $resource('rest/game/status/', {}, {
+            query: {method: 'GET', params: {}, isArray: false}
+        });
     });

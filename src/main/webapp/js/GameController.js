@@ -1,13 +1,15 @@
-function GameController($scope) {
+function GameController($scope, gameCore) {
 
     $scope.startNew = function () {
-        console.log("TODO server call")
         $scope.resetBoard()
         $scope.currentState = GameState.RUNNING
+        $scope.refreshStatus()
     }
 
-    $scope.statusText = function() {
-        return "TODO status text"
+    $scope.refreshStatus = function() {
+        gameCore.query(function(response) {
+            $scope.statusText = response.status
+        });
     }
 
     $scope.resetBoard = function () {
