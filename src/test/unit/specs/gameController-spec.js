@@ -1,6 +1,6 @@
 'use strict';
 
-describe("Dummy test", function () {
+describe("Game Controller", function () {
 
     beforeEach(module('msApp'));
 
@@ -28,13 +28,15 @@ describe("Dummy test", function () {
     it('should have running status after starting new game', function () {
 
         // given
-        scope.startNew();
+        $httpBackend.expectGET('rest/game/status').respond('{ "status": "Running"  }');
 
         // when
-        var status = scope.statusText();
+        scope.startNew();
+        $httpBackend.flush();
 
         // then
-        expect(status).toBe("TODO status text");
+        var status = scope.statusText;
+        expect(status).toBe('Running');
     });
 
 
