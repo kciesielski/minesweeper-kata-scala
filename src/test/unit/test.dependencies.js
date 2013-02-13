@@ -5,8 +5,6 @@ EnvJasmine.loadGlobal(EnvJasmine.libDir + "angular-resource-1.1.1.js");
 EnvJasmine.loadGlobal(EnvJasmine.libDir + "angular-sanitize-1.1.1.js");
 
 // Testing libraries
-EnvJasmine.loadGlobal(EnvJasmine.testDir + "../lib/require/require.js");
-EnvJasmine.loadGlobal(EnvJasmine.testDir + "require.conf.js");
 EnvJasmine.loadGlobal(EnvJasmine.testDir + "../lib/angular/angular-mocks-1.1.1.js");
 
 // Application
