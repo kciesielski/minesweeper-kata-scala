@@ -25,7 +25,7 @@ describe("Game Controller", function () {
     }));
 
 
-    it('should have running status after starting new game', function () {
+    it('should have status from server after starting new game', function () {
 
         // given
         $httpBackend.expectGET('rest/game/status').respond('{ "status": "Running"  }');
