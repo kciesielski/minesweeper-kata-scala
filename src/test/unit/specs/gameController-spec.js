@@ -66,5 +66,65 @@ describe("Game Controller", function () {
         expect(firstRow.fields.length).toBe(3);
     });
 
+    it('should not allow to step on a field if game not started', function () {
+
+        // when
+        var executedFunction = function() {
+            scope.step(1, 1)
+        }
+
+        // then
+        expect(executedFunction).toThrow(new Error("unexpected step in non-running state"));
+    });
+
+    it('should call server to step in running state', function () {
+
+        $httpBackend.expectPOST('rest/game/randomLevel').respond(200);
+        $httpBackend.expectGET('rest/game/status').respond('{ "status": "Running"  }');
+
+        scope.startNew();
+        $httpBackend.flush();
+        $httpBackend.expectPUT('rest/game/step').respond(201);
+        $httpBackend.expectGET('rest/game/tile/1/1').respond('{ "tile": "1"}');
+        scope.step(1, 1);
+        $httpBackend.flush();
+        // then
+        expect(scope.currentState).toBe(GameState.RUNNING);
+    });
+
+    it('should change state if step on a mine', function () {
+
+        $httpBackend.expectPOST('rest/game/randomLevel').respond(200);
+        $httpBackend.expectGET('rest/game/status').respond('{ "status": "Running"  }');
+
+        scope.startNew();
+        $httpBackend.flush();
+        $httpBackend.expectPUT('rest/game/step').respond(201);
+        $httpBackend.expectGET('rest/game/tile/1/1').respond('{ "tile": "*"}');
+        scope.step(1, 1);
+        $httpBackend.flush();
+        // then
+        expect(scope.statusText).toBe('Dead');
+        expect(scope.currentState).toBe(GameState.DEAD);
+    });
+
+    it('should throw exception if try to step on a non-unknown field', function () {
+
+        $httpBackend.expectPOST('rest/game/randomLevel').respond(200);
+        $httpBackend.expectGET('rest/game/status').respond('{ "status": "Running"  }');
+
+        scope.startNew();
+        $httpBackend.flush();
+        $httpBackend.expectPUT('rest/game/step').respond(201);
+        $httpBackend.expectGET('rest/game/tile/1/1').respond('{ "tile": "1"}');
+        scope.step(1, 1);
+        $httpBackend.flush();
+
+        var secondStepExecution = function() {
+            scope.step(1, 1)
+        }
+
+        expect(secondStepExecution).toThrow(new Error("unexpected step on a non-unknown field"));
+    });
 
 });

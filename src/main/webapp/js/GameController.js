@@ -2,15 +2,42 @@ function GameController($scope, gameStatus, levelService) {
 
     $scope.startNew = function () {
         var cmd = $scope.newGameCommand;
-        levelService.reset(cmd.width, cmd.height, cmd.mineCount, function() {
+        levelService.reset(cmd.width, cmd.height, cmd.mineCount, function () {
             $scope.resetBoard();
             $scope.currentState = GameState.RUNNING;
             $scope.refreshStatus();
         });
     }
 
-    $scope.refreshStatus = function() {
-        gameStatus.query(function(response) {
+    function applyNewTileValue(x, y, tile) {
+        var field = $scope.board.rows[y].fields[x];
+        field.value = tile;
+        if (tile == '*') {
+            field.type = FieldType.MINED;
+            $scope.statusText = 'Dead';
+            $scope.currentState = GameState.DEAD;
+        }
+        else {
+            field.type = FieldType.REVEALED;
+        }
+    }
+
+    $scope.step = function (x, y) {
+
+        if ($scope.currentState != GameState.RUNNING)
+            throw "unexpected step in non-running state";
+        if ($scope.board.rows[y].fields[x].type != FieldType.UNKNOWN) {
+            throw "unexpected step on a non-unknown field";
+        }
+        levelService.step(x, y, function () {
+            levelService.checkTile(x, y, function(response) {
+                applyNewTileValue(x, y, response.tile);
+            });
+        });
+    }
+
+    $scope.refreshStatus = function () {
+        gameStatus.query(function (response) {
             $scope.statusText = response.status
         });
     }
@@ -29,8 +56,6 @@ function GameController($scope, gameStatus, levelService) {
             row.fields = []
             for (var colIndex = 0; colIndex < width; colIndex++) {
                 row.fields[colIndex] = {
-                    x: colIndex,
-                    y: rowIndex,
                     value: "     ",
                     type: FieldType.UNKNOWN
                 }
