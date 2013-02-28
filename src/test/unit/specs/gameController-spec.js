@@ -29,7 +29,6 @@ describe("Game Controller", function () {
 
         // given
         $httpBackend.expectPOST('rest/game/randomLevel').respond(200);
-        $httpBackend.expectGET('rest/game/status').respond('{ "status": "Running"  }');
 
         // when
         scope.startNew();
@@ -48,7 +47,6 @@ describe("Game Controller", function () {
 
         // given
         $httpBackend.expectPOST('rest/game/randomLevel').respond(200);
-        $httpBackend.expectGET('rest/game/status').respond('{ "status": "Running"  }');
         scope.newGameCommand = {
             width: 3,
             height: 4,
@@ -91,7 +89,6 @@ describe("Game Controller", function () {
     it('should not allow to toggle flag on a revealed field', function () {
 
         $httpBackend.expectPOST('rest/game/randomLevel').respond(200);
-        $httpBackend.expectGET('rest/game/status').respond('{ "status": "Running"  }');
 
         scope.startNew();
         $httpBackend.flush();
@@ -112,7 +109,6 @@ describe("Game Controller", function () {
     it('should flag an unflagged field', function () {
 
         $httpBackend.expectPOST('rest/game/randomLevel').respond(200);
-        $httpBackend.expectGET('rest/game/status').respond('{ "status": "Running"  }');
 
         scope.startNew();
         $httpBackend.flush();
@@ -124,7 +120,6 @@ describe("Game Controller", function () {
     it('should unflag a flagged field', function () {
 
         $httpBackend.expectPOST('rest/game/randomLevel').respond(200);
-        $httpBackend.expectGET('rest/game/status').respond('{ "status": "Running"  }');
 
         scope.startNew();
         $httpBackend.flush();
@@ -137,7 +132,6 @@ describe("Game Controller", function () {
     it('should call server to step in running state', function () {
 
         $httpBackend.expectPOST('rest/game/randomLevel').respond(200);
-        $httpBackend.expectGET('rest/game/status').respond('{ "status": "Running"  }');
 
         scope.startNew();
         $httpBackend.flush();
@@ -152,7 +146,6 @@ describe("Game Controller", function () {
     it('should change state if step on a mine', function () {
 
         $httpBackend.expectPOST('rest/game/randomLevel').respond(200);
-        $httpBackend.expectGET('rest/game/status').respond('{ "status": "Running"  }');
 
         scope.startNew();
         $httpBackend.flush();
@@ -168,7 +161,6 @@ describe("Game Controller", function () {
     it('should throw exception if try to step on a non-unknown field', function () {
 
         $httpBackend.expectPOST('rest/game/randomLevel').respond(200);
-        $httpBackend.expectGET('rest/game/status').respond('{ "status": "Running"  }');
 
         scope.startNew();
         $httpBackend.flush();

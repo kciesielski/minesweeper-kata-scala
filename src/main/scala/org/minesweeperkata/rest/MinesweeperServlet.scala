@@ -38,8 +38,4 @@ class MinesweeperServlet(val levelRandomizer: LevelRandomizer = new LevelRandomi
     randomize(params.width, params.height, params.mineCount, levelRandomizer, gameStateDao)
   }
 
-  get("/status") {
-    gameStateDao.getState.describe
-  }
-
 }

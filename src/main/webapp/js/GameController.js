@@ -1,11 +1,10 @@
-function GameController($scope, gameStatus, levelService) {
+function GameController($scope, levelService) {
 
     $scope.startNew = function () {
         var cmd = $scope.newGameCommand;
         levelService.reset(cmd.width, cmd.height, cmd.mineCount, function () {
             $scope.resetBoard();
             $scope.currentState = GameState.RUNNING;
-            $scope.refreshStatus();
         });
     }
 
@@ -49,12 +48,6 @@ function GameController($scope, gameStatus, levelService) {
             field.type = FieldType.FLAGGED;
     };
 
-    $scope.refreshStatus = function () {
-        gameStatus.query(function (response) {
-            $scope.statusText = response.status
-        });
-    }
-
     $scope.resetBoard = function () {
         $scope.board = {
             rows: []
@@ -74,6 +67,7 @@ function GameController($scope, gameStatus, levelService) {
                 }
             }
         }
+        $scope.statusText = 'Running';
     }
 
     $scope.newGameCommand = {

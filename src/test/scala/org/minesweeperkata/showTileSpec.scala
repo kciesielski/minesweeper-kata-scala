@@ -16,8 +16,8 @@ class showTileSpec extends Specification with ShouldMatchers with Mockito {
       gameStateDaoStub.getState returns dummyState
 
       // then
-      showTile(Pos(0, 0), gameStateDaoStub) === "1"
-      showTile(Pos(1, 1), gameStateDaoStub) === "*"
+      showTile(Pos(0, 0), gameStateDaoStub) === TileValue("1")
+      showTile(Pos(1, 1), gameStateDaoStub) === TileValue("*")
     }
 
     "throw exception if field is not visited" in {

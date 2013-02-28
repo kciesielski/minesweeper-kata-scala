@@ -1,12 +1,5 @@
 var services = angular.module('msServices', ['ngResource']);
 
-    services.factory('gameStatus', function ($resource) {
-
-        return $resource('rest/game/status/', {}, {
-            query: {method: 'GET', params: {}, isArray: false}
-        });
-    });
-
     services.factory('levelService', function ($resource) {
 
         var boardService = {};

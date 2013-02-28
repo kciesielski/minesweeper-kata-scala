@@ -23,7 +23,7 @@ object stepOnTile extends ((Pos, GameStateDao) => Unit) {
         else
           RunningGameState(revealedTiles + pos, currentLevel)
       }
-      case _ => throw new IllegalStateException("Cannot step on field in current state: " + state.describe)
+      case _ => throw new IllegalStateException("Cannot step on field in current state: " + state)
     }
   }
 

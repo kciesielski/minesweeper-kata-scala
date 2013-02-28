@@ -1,20 +1,7 @@
 package org.minesweeperkata
 
-sealed trait GameState {
-  def describe: String
-}
+sealed trait GameState
 
-case class RunningGameState(revealedTiles: Set[Pos], currentLevel: GameDef) extends GameState {
-
-  override def describe: String = "running"
-}
-
-case object DeadGameState extends GameState {
-
-  override def describe: String = "dead"
-}
-
-case object WinnerGameState extends GameState {
-
-  override def describe: String = "won"
-}
+case class RunningGameState(revealedTiles: Set[Pos], currentLevel: GameDef) extends GameState
+case object DeadGameState extends GameState
+case object WinnerGameState extends GameState
