@@ -36,6 +36,19 @@ function GameController($scope, gameStatus, levelService) {
         });
     }
 
+    $scope.toggleFlag = function (x, y) {
+
+        if ($scope.currentState != GameState.RUNNING)
+            throw "unexpected flag toggle in non-running state";
+        var field = $scope.board.rows[y].fields[x];
+        if (field.type != FieldType.FLAGGED && field.type != FieldType.UNKNOWN)
+            throw "unexpected flag toggle on a revealed field";
+        if (field.type == FieldType.FLAGGED)
+            field.type = FieldType.UNKNOWN;
+        else if (field.type == FieldType.UNKNOWN)
+            field.type = FieldType.FLAGGED;
+    };
+
     $scope.refreshStatus = function () {
         gameStatus.query(function (response) {
             $scope.statusText = response.status

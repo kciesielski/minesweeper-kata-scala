@@ -77,6 +77,63 @@ describe("Game Controller", function () {
         expect(executedFunction).toThrow(new Error("unexpected step in non-running state"));
     });
 
+    it('should not allow to toggle flag if game not started', function () {
+
+        // when
+        var executedFunction = function() {
+            scope.toggleFlag(1, 1)
+        }
+
+        // then
+        expect(executedFunction).toThrow(new Error("unexpected flag toggle in non-running state"));
+    });
+
+    it('should not allow to toggle flag on a revealed field', function () {
+
+        $httpBackend.expectPOST('rest/game/randomLevel').respond(200);
+        $httpBackend.expectGET('rest/game/status').respond('{ "status": "Running"  }');
+
+        scope.startNew();
+        $httpBackend.flush();
+        $httpBackend.expectPUT('rest/game/step').respond(201);
+        $httpBackend.expectGET('rest/game/tile/1/1').respond('{ "tile": "1"}');
+        scope.step(1, 1);
+        $httpBackend.flush();
+
+        // when
+        var executedFunction = function() {
+            scope.toggleFlag(1, 1)
+        }
+
+        // then
+        expect(executedFunction).toThrow(new Error("unexpected flag toggle on a revealed field"));
+    });
+
+    it('should flag an unflagged field', function () {
+
+        $httpBackend.expectPOST('rest/game/randomLevel').respond(200);
+        $httpBackend.expectGET('rest/game/status').respond('{ "status": "Running"  }');
+
+        scope.startNew();
+        $httpBackend.flush();
+        scope.toggleFlag(1, 1)
+
+        expect(scope.board.rows[1].fields[1].type).toBe(FieldType.FLAGGED);
+    });
+
+    it('should unflag a flagged field', function () {
+
+        $httpBackend.expectPOST('rest/game/randomLevel').respond(200);
+        $httpBackend.expectGET('rest/game/status').respond('{ "status": "Running"  }');
+
+        scope.startNew();
+        $httpBackend.flush();
+        scope.toggleFlag(1, 1);
+        scope.toggleFlag(1, 1);
+
+        expect(scope.board.rows[1].fields[1].type).toBe(FieldType.UNKNOWN);
+    });
+
     it('should call server to step in running state', function () {
 
         $httpBackend.expectPOST('rest/game/randomLevel').respond(200);
