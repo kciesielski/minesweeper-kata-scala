@@ -1,4 +1,4 @@
-var msApp = angular.module('msApp', ['msServices']).
+var msApp = angular.module('msApp', ['msServices', 'msDirectives']).
     config(['$routeProvider', function($routeProvider) {
 
         $routeProvider.
