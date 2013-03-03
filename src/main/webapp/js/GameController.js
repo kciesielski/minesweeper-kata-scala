@@ -2,7 +2,7 @@ function GameController($scope, levelService) {
 
     $scope.startNew = function () {
         var cmd = $scope.newGameCommand;
-        levelService.reset(cmd.width, cmd.height, cmd.mineCount, function () {
+        levelService.reset(cmd, function () {
             $scope.resetBoard();
             $scope.currentState = GameState.RUNNING;
         });

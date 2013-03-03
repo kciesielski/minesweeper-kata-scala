@@ -11,11 +11,8 @@ var services = angular.module('msServices', ['ngResource']);
             insert: { method: "PUT" }
         });
 
-        boardService.reset = function(x, y, mineCount, successFunction) {
-            var json = {};
-            json.x = x;
-            json.y = y;
-            json.mineCount = mineCount;
+        boardService.reset = function(command, successFunction) {
+            var json = command;
             self.resetResource.save(angular.toJson(json), successFunction)
 
         }
