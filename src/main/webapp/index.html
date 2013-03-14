@@ -32,7 +32,8 @@
 <table border="1">
     <tr ng-repeat="row in board.rows">
         <td ng-repeat="field in row.fields">
-            <tile text="{{field.value}}" tileType="{{field.type}}" ng-click="step(field.x, field.y)" /></td>
+            <tile text="{{field.value}}" tileType="{{field.type}}" ng-click="step(field.x, field.y)"
+                    right-click="toggleFlag(field.x, field.y)"/></td>
     </tr>
 </table>
 

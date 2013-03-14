@@ -58,19 +58,15 @@ describe("Game Controller", function () {
         expect(firstRow.fields.length).toBe(3);
     });
 
-    it('should not allow to toggle flag on a revealed field', function () {
+    it('should not do anything when toggle flag on a revealed field', function () {
 
         $httpBackend.expectPUT('rest/game/step').respond({ "tile": "1"});
         scope.step(1, 1);
         $httpBackend.flush();
-
-        // when
-        var executedFunction = function() {
-            scope.toggleFlag(1, 1)
-        }
+        scope.toggleFlag(1, 1)
 
         // then
-        expect(executedFunction).toThrow(new Error("unexpected flag toggle on a revealed field"));
+        expect(scope.board.rows[1].fields[1].type).toBe(FieldType.REVEALED);
     });
 
     it('should flag an unflagged field', function () {

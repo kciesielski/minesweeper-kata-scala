@@ -8,7 +8,7 @@ function GameController($scope, levelService) {
         });
     }
 
-    $scope.applyNewTileValue = function(x, y, tile) {
+    $scope.applyNewTileValue = function (x, y, tile) {
         var field = $scope.board.rows[y].fields[x];
         field.value = tile;
         if (tile == '*') {
@@ -26,8 +26,8 @@ function GameController($scope, levelService) {
             return;
         }
         levelService.step(x, y, function (response) {
-                $scope.applyNewTileValue(x, y, response.tile);
-            });
+            $scope.applyNewTileValue(x, y, response.tile);
+        });
     }
 
     $scope.toggleFlag = function (x, y) {
@@ -35,12 +35,17 @@ function GameController($scope, levelService) {
         if ($scope.currentState != GameState.RUNNING)
             throw "unexpected flag toggle in non-running state";
         var field = $scope.board.rows[y].fields[x];
-        if (field.type != FieldType.FLAGGED && field.type != FieldType.UNKNOWN)
-            throw "unexpected flag toggle on a revealed field";
-        if (field.type == FieldType.FLAGGED)
+        if (field.type != FieldType.FLAGGED && field.type != FieldType.UNKNOWN) {
+            return
+        }
+        if (field.type == FieldType.FLAGGED) {
+            field.value = "     ";
             field.type = FieldType.UNKNOWN;
-        else if (field.type == FieldType.UNKNOWN)
+        }
+        else if (field.type == FieldType.UNKNOWN) {
             field.type = FieldType.FLAGGED;
+            field.value = "F";
+        }
     };
 
     $scope.resetBoard = function () {
@@ -63,7 +68,7 @@ function GameController($scope, levelService) {
                     x: fx,
                     y: fy
                 }
-                fx ++;
+                fx++;
             }
             fy++;
         }
