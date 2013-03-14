@@ -17,20 +17,11 @@ class MinesweeperServlet(val levelRandomizer: LevelRandomizer = new LevelRandomi
     contentType = formats("json")
   }
 
-  private def extractPos(xParam: String, yParam: String): Pos = {
-    val x = SafeInt(xParam).get
-    val y = SafeInt(yParam).get
-    Pos(x, y)
-  }
-
-  get("/tile/:x/:y") {
-    val pos = extractPos(params("x"), params("y"))
-    showTile(pos, gameStateDao)
-  }
-
   put("/step") {
     val pos = parsedBody.extract[Pos]
+    val tile: TileValue = showTile(pos, gameStateDao)
     stepOnTile(pos, gameStateDao)
+    tile
   }
 
   post("/randomLevel") {

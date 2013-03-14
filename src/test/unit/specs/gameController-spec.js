@@ -15,9 +15,9 @@ describe("Game Controller", function () {
         $httpBackend = _$httpBackend_;
 
         scope = $rootScope.$new();
-
+        $httpBackend.expectPOST('rest/game/randomLevel').respond(200);
         ctrl = $controller('GameController', {$scope: scope});
-
+        $httpBackend.flush();
         $routeParams.entryId = 1;
 
         location = $location;
@@ -28,12 +28,6 @@ describe("Game Controller", function () {
     it('should have status from server after starting new game', function () {
 
         // given
-        $httpBackend.expectPOST('rest/game/randomLevel').respond(200);
-
-        // when
-        scope.startNew();
-        $httpBackend.flush();
-
         // then
         var status = scope.statusText;
         expect(status).toBe('Running');
@@ -64,36 +58,9 @@ describe("Game Controller", function () {
         expect(firstRow.fields.length).toBe(3);
     });
 
-    it('should not allow to step on a field if game not started', function () {
-
-        // when
-        var executedFunction = function() {
-            scope.step(1, 1)
-        }
-
-        // then
-        expect(executedFunction).toThrow(new Error("unexpected step in non-running state"));
-    });
-
-    it('should not allow to toggle flag if game not started', function () {
-
-        // when
-        var executedFunction = function() {
-            scope.toggleFlag(1, 1)
-        }
-
-        // then
-        expect(executedFunction).toThrow(new Error("unexpected flag toggle in non-running state"));
-    });
-
     it('should not allow to toggle flag on a revealed field', function () {
 
-        $httpBackend.expectPOST('rest/game/randomLevel').respond(200);
-
-        scope.startNew();
-        $httpBackend.flush();
-        $httpBackend.expectPUT('rest/game/step').respond(201);
-        $httpBackend.expectGET('rest/game/tile/1/1').respond('{ "tile": "1"}');
+        $httpBackend.expectPUT('rest/game/step').respond({ "tile": "1"});
         scope.step(1, 1);
         $httpBackend.flush();
 
@@ -135,8 +102,7 @@ describe("Game Controller", function () {
 
         scope.startNew();
         $httpBackend.flush();
-        $httpBackend.expectPUT('rest/game/step').respond(201);
-        $httpBackend.expectGET('rest/game/tile/1/1').respond('{ "tile": "1"}');
+        $httpBackend.expectPUT('rest/game/step').respond({ "tile": "1"});
         scope.step(1, 1);
         $httpBackend.flush();
         // then
@@ -149,8 +115,7 @@ describe("Game Controller", function () {
 
         scope.startNew();
         $httpBackend.flush();
-        $httpBackend.expectPUT('rest/game/step').respond(201);
-        $httpBackend.expectGET('rest/game/tile/1/1').respond('{ "tile": "*"}');
+        $httpBackend.expectPUT('rest/game/step').respond('{ "tile": "*"}');
         scope.step(1, 1);
         $httpBackend.flush();
         // then
@@ -164,16 +129,12 @@ describe("Game Controller", function () {
 
         scope.startNew();
         $httpBackend.flush();
-        $httpBackend.expectPUT('rest/game/step').respond(201);
-        $httpBackend.expectGET('rest/game/tile/1/1').respond('{ "tile": "1"}');
+        $httpBackend.expectPUT('rest/game/step').respond('{ "tile": "1"}');
         scope.step(1, 1);
         $httpBackend.flush();
+        scope.step(1, 1)
 
-        var secondStepExecution = function() {
-            scope.step(1, 1)
-        }
-
-        expect(secondStepExecution).toThrow(new Error("unexpected step on a non-unknown field"));
+        expect(scope.board.rows[1].fields[1].value).toBe("1");
     });
 
 });

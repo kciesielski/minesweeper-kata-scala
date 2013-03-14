@@ -20,17 +20,6 @@ class showTileSpec extends Specification with ShouldMatchers with Mockito {
       showTile(Pos(1, 1), gameStateDaoStub) === TileValue("*")
     }
 
-    "throw exception if field is not visited" in {
-
-      // given
-      val dummyState = new RunningGameState(Set(Pos(0, 0)), TestLevel1)
-      val gameStateDaoStub = mock[GameStateDao]
-      gameStateDaoStub.getState returns dummyState
-
-      // then
-      showTile(Pos(1, 1), gameStateDaoStub) must throwA[IllegalStateException]
-    }
-
     "throw exception if game in 'winner' state" in {
       // given
       val gameStateDaoStub = mock[GameStateDao]

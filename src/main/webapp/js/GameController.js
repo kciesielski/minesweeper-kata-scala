@@ -8,7 +8,7 @@ function GameController($scope, levelService) {
         });
     }
 
-    function applyNewTileValue(x, y, tile) {
+    $scope.applyNewTileValue = function(x, y, tile) {
         var field = $scope.board.rows[y].fields[x];
         field.value = tile;
         if (tile == '*') {
@@ -22,17 +22,12 @@ function GameController($scope, levelService) {
     }
 
     $scope.step = function (x, y) {
-
-        if ($scope.currentState != GameState.RUNNING)
-            throw "unexpected step in non-running state";
-        if ($scope.board.rows[y].fields[x].type != FieldType.UNKNOWN) {
-            throw "unexpected step on a non-unknown field";
+        if ($scope.currentState != GameState.RUNNING || $scope.board.rows[y].fields[x].type != FieldType.UNKNOWN) {
+            return;
         }
-        levelService.step(x, y, function () {
-            levelService.checkTile(x, y, function(response) {
-                applyNewTileValue(x, y, response.tile);
+        levelService.step(x, y, function (response) {
+                $scope.applyNewTileValue(x, y, response.tile);
             });
-        });
     }
 
     $scope.toggleFlag = function (x, y) {
@@ -55,17 +50,22 @@ function GameController($scope, levelService) {
 
         var width = $scope.newGameCommand.width
         var height = $scope.newGameCommand.height
-
+        var fy = 0;
         for (var rowIndex = 0; rowIndex < height; rowIndex++) {
             $scope.board.rows[rowIndex] = []
             var row = $scope.board.rows[rowIndex]
             row.fields = []
+            var fx = 0;
             for (var colIndex = 0; colIndex < width; colIndex++) {
                 row.fields[colIndex] = {
                     value: "     ",
-                    type: FieldType.UNKNOWN
+                    type: FieldType.UNKNOWN,
+                    x: fx,
+                    y: fy
                 }
+                fx ++;
             }
+            fy++;
         }
         $scope.statusText = 'Running';
     }
@@ -76,7 +76,7 @@ function GameController($scope, levelService) {
         mineCount: 8
     }
 
-    $scope.resetBoard()
+    $scope.startNew()
 }
 
 GameState = {

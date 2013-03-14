@@ -14,7 +14,6 @@ object showTile extends ((Pos, GameStateDao) => TileValue)  {
     state match {
       case RunningGameState(revealedTiles, level) => {
         if (!level.contains(pos)) throw new IllegalArgumentException("Position " + pos + " exceeds game terrain")
-        if (!revealedTiles(pos)) throw new IllegalStateException("Position " + pos + " has not been visited before")
         TileValue(level.hint(pos))
       }
       case _ => throw new IllegalStateException("Cannot reveal any tile in current state: " + state)
