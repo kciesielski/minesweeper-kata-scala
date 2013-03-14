@@ -9,18 +9,19 @@ class LevelRandomizerSpec extends Specification {
 
     "build a simple level" in {
 
-      val randomNumbers = Stream(0, 0, 1, 1, 2, 2, 3, 3, 4, 4)
+      def randomNumbers: Stream[Int] = Stream(0, 0, 1, 1, 2, 2, 3, 3, 4, 4)
+
       val expectedMineLayout: Pos => Boolean = {
         pos => {
           (pos == Pos(0, 0) || pos == Pos(1, 1) || pos == Pos(2, 2) || pos == Pos(3, 3) || pos == Pos(4, 4))
         }
       }
-      val randomizer = new LevelRandomizer(randomNumbers)
+      val randomizer = new LevelRandomizer()
 
       val width = 5
       val height = 6
       //when
-      val nextLevel = randomizer.getNextLevel(width, height, 5)
+      val nextLevel = randomizer.getNextLevel(width, height, 5, randomNumbers)
       // then
       val generatedMineLayout = nextLevel.mine
 
@@ -32,18 +33,18 @@ class LevelRandomizerSpec extends Specification {
 
     "not allow repeated mine positions" in {
 
-      val randomNumbers = Stream(0, 0, 1, 1, 1, 1, 2, 2, 3, 3, 3)
+      def randomNumbers: Stream[Int] = Stream(0, 0, 1, 1, 1, 1, 2, 2, 3, 3, 3)
       val expectedMineLayout: Pos => Boolean = {
         pos => {
           (pos == Pos(0, 0) || pos == Pos(1, 1) || pos == Pos(1, 2) || pos == Pos(2, 3) || pos == Pos(3, 3))
         }
       }
-      val randomizer = new LevelRandomizer(randomNumbers)
+      val randomizer = new LevelRandomizer()
 
       val width = 5
       val height = 6
       // when
-      val nextLevel = randomizer.getNextLevel(width, height, 5)
+      val nextLevel = randomizer.getNextLevel(width, height, 5, randomNumbers)
 
       // then
       val generatedMineLayout = nextLevel.mine

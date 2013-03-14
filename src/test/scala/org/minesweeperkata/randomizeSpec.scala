@@ -23,7 +23,6 @@ class randomizeSpec extends Specification with Mockito {
        randomize(newWidth, newHeight, mineCount, mockRandomizer, spiedLevelDao)
 
        // then
-       there was one(mockRandomizer).getNextLevel(newWidth, newHeight, mineCount)
        there was one(spiedLevelDao).saveState(expectedLevel)
 
      }

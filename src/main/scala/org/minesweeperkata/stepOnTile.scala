@@ -2,7 +2,7 @@ package org.minesweeperkata
 
 object stepOnTile extends ((Pos, GameStateDao) => Unit) {
 
-  def noMoreTiles(revealedTiles: Set[Pos], currentLevel: GameDef): Boolean = {
+  private def noMoreTiles(revealedTiles: Set[Pos], currentLevel: GameDef): Boolean = {
     val allPositions = for (x <- 0 to currentLevel.width - 1;
                             y <- 0 to currentLevel.height - 1) yield Pos(x, y)
 
@@ -10,7 +10,7 @@ object stepOnTile extends ((Pos, GameStateDao) => Unit) {
     !notVisitedPositions.exists((pos: Pos) => (currentLevel.hint(pos) != "0" && currentLevel.hint(pos) != "*"))
   }
 
-  def doStepOn(pos: Pos, state: GameState): GameState = {
+  private def doStepOn(pos: Pos, state: GameState): GameState = {
     state match {
       case RunningGameState(revealedTiles, currentLevel) => {
         if (!currentLevel.contains(pos)) throw new IllegalArgumentException("Position exceeds level terrain")

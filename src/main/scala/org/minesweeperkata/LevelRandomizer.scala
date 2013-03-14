@@ -3,15 +3,16 @@ package org.minesweeperkata
 import util.Random
 import annotation.tailrec
 
-class LevelRandomizer(val randomInts: Stream[Int] = Stream continually (Random.nextInt())) {
+class LevelRandomizer() {
 
+  def randomFunction: Stream[Int] =  Stream.cons(util.Random.nextInt(Int.MaxValue), randomFunction)
 
-  def getNextLevel(newWidth: Int, newHeight: Int, mineCount: Int): GameDef = {
+  def getNextLevel(newWidth: Int, newHeight: Int, mineCount: Int, fn: Stream[Int] = randomFunction): GameDef = {
     new GameDef {
       val height: Int = newHeight
       val width: Int = newWidth
       val emptyLayout = (pos: Pos) => false
-      override val mine = randomPosition(randomInts, mineCount, newWidth, newHeight, emptyLayout)
+      override val mine = randomPosition(fn, mineCount, newWidth, newHeight, emptyLayout)
     }
   }
 
