@@ -10,4 +10,5 @@ EnvJasmine.loadGlobal(EnvJasmine.testDir + "../lib/angular/angular-mocks-1.1.1.j
 // Application
 EnvJasmine.loadGlobal(EnvJasmine.rootDir + "app.js");
 EnvJasmine.loadGlobal(EnvJasmine.rootDir + "GameController.js");
+EnvJasmine.loadGlobal(EnvJasmine.rootDir + "directives.js");
 EnvJasmine.loadGlobal(EnvJasmine.rootDir + "GameServices.js");
