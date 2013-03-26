@@ -21,13 +21,62 @@ function GameController($scope, levelService) {
         }
     }
 
-    $scope.step = function (x, y) {
-        if ($scope.currentState != GameState.RUNNING || $scope.board.rows[y].fields[x].type != FieldType.UNKNOWN) {
+    $scope.step = function (position) {
+        if ($scope.currentState != GameState.RUNNING || $scope.board.rows[position.y].fields[position.x].type != FieldType.UNKNOWN) {
             return;
         }
-        levelService.step(x, y, function (response) {
-            $scope.applyNewTileValue(x, y, response.tile);
+        levelService.step(position.x, position.y, function (response) {
+            $scope.applyNewTileValue(position.x, position.y, response.tile);
+            if (response.tile == '0') {
+                $scope.stepOnNotVisitedNeighbors(position)
+            }
         });
+    }
+
+    $scope.stepOnNotVisitedNeighbors = function (position) {
+        var neighbors = [
+            {
+                x: position.x,
+                y: position.y - 1
+            },
+            {
+                x: position.x,
+                y: position.y + 1
+            },
+            {
+                x: position.x - 1,
+                y: position.y - 1
+            },
+            {
+                x: position.x + 1,
+                y: position.y - 1
+            },
+            {
+                x: position.x - 1,
+                y: position.y
+            },
+            {
+                x: position.x + 1,
+                y: position.y
+            },
+            {
+                x: position.x + 1,
+                y: position.y + 1
+            },
+            {
+                x: position.x - 1,
+                y: position.y + 1
+            }
+        ]
+        neighbors.forEach(function (element, index, array) {
+            if ($scope.board.rows[element.y].fields[element.x].type == FieldType.UNKNOWN) {
+                var position = {
+                    x: element.x,
+                    y: element.y
+                }
+                $scope.step(position)
+            }
+        })
     }
 
     $scope.toggleFlag = function (x, y) {
